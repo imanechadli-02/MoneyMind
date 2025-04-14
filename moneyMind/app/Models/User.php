@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'photo',
+        'salaire',
+        'date_credit',
+        'Budjet',
+    ];
+
+    protected $casts = [
+        'last_login' => 'datetime',
+        'date_salaire' => 'date',
     ];
 
     /**
@@ -44,5 +54,38 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+
     }
+
+
+    // les relations
+    public function depenses()
+    {
+        return $this->hasMany(Depense::class);
+    }
+
+    public function depenses_reccurentes()
+    {
+        return $this->hasMany(DepenseRecurrente::class);
+    }
+
+    public function list_souhaits()
+    {
+        return $this->hasMany(ListeSouhaits::class);
+    }
+
+    public function objectifs()
+    {
+        return $this->hasMany(ObjectifMensuel::class);
+    }
+
+    public function alearts()
+    {
+        return $this->hasMany(AleartConfig::class);
+    }
+    public function notification()
+    {
+        return $this->hasMany(Aleart::class);
+    }
+
 }

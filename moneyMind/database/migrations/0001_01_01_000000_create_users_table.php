@@ -17,10 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['Admin','Utilisateur'])->default('Utilisateur');
+            $table->string('photo')->nullable();
+            $table->decimal('salaire', 10, 2);
+            $table->decimal('Budjet', 10, 2);
+            $table->date('date_credit');
+            $table->timestamp('last_login')->useCurrent();
             $table->rememberToken();
             $table->timestamps();
         });
-        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
